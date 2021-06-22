@@ -1,6 +1,7 @@
 import React from "react";
-import Fetchuser from "./Fetchuser";
+import ShowLoader from "./ShowLoader";
 import ShowUser from "./ShowUser";
+import GetUser from "./GetUser";
 
 class App extends React.Component {
 
@@ -9,8 +10,10 @@ class App extends React.Component {
     user: "none",
   }
 
-  callback = (data) => {
-    this.setState({user: data});
+  componentDidMount = () => {
+    GetUser((data) => {
+      this.setState({user: data});
+    });
   }
 
  render() {
@@ -21,8 +24,7 @@ class App extends React.Component {
     return (
       <div className="container">
         <h1>Random user</h1>
-        {(this.state.user === "none") ? <Fetchuser cb={this.callback}/> : <ShowUser user={this.state.user}/>} 
-          
+        {(this.state.user === "none") ? <ShowLoader user={this.state.user}/> : <ShowUser user={this.state.user}/>}      
       </div>
 
     )
